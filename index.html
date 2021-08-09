@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolicyBazzar-Task-3 By Akshada</title>
+    <link rel="stylesheet" href="assets/css/policy.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ 
+</head>
+<body>
+<!-- start header section -->
+ <header>
+
+
+    <nav class="navbar navbar-default ">
+        
+        <div class="container-fluid d-inline justify-content-evenly ">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header mb-5 align-content-center">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="true"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                <a href="https://www.policybachat.com" id="anchorLog" class="navbar-brand">
+                    <img src="images/pb-logo.svg" alt="PolicyBachat Logo"></a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <p class="navbar-text navbar-right text-right">
+                    Need Help? Call <a href="tel:18001234003"><strong>1800-123-4003</strong></a><br>
+                    <small>(9:00 AM to 9:00 PM)</small>
+                </p>
+                <ul id="liDashBoard" class="nav navbar-nav navbar-right" style="display: none;">
+                    <li>
+                        <a href="/dashboard" id="anchorDashBoard"><i class="fa fa-home"></i>Dashboard</a>
+                    </li>
+                    <li id="liLogOut" style="display:none;">
+                        <a id="lbLogout" href="javascript:__doPostBack('ctl00$lbLogout','')" style="display: none;"><i class="fa fa-sign-out"></i> Logout</a>
+                        <a href="/login" id="anchorLogIn"><i class="fa fa-sign-in"></i>Log In</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</header>
+<!-- end of header -->
+
+<!-- Start Saving Money on Insurance Policy -->
+
+ <div data-ng-app="PBApp" data-ng-controller="CarRegistrationcontroller">
+    <section class="intro car" id="divCarPanel">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 30px;">
+                <h1 id="MainContent_heading">Start Saving Money on Insurance Policy</h1>
+                <p class="text">Compare Life, Health, Car and Two wheeler Insurance rates from top Insurance companies for free.</p>
+            </div>
+            <div class="panel panel-default">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="/car-insurance">Car</a></li>
+                    <li><a href="/life-insurance">Life</a></li>
+                    <li><a href="/health-insurance">Health</a></li>
+                    <li><a href="/two-wheeler-insurance">Bike</a></li>
+                </ul>
+                <div class="panel-body">
+                    <h4 align="center" style="color: #5f2ee5; margin: 0 0 15px;">Compare Car Insurance Quotes</h4>
+                    <div class="quickquote">
+                        <div class="form-group">
+                            <div id="divMake" style="width: 100%;" data-ng-model="MakeData.Make" custom-select-options="customOptions"
+                                custom-select="f.Make for f in FilterData($searchTerm)" autofocus>
+                            </div>
+                            <p id="PVehilceMasterError">
+                            </p>
+                        </div>
+                        <div class="form-group" data-ng-show="ObjMotorInfo.Make!='' && ObjMotorInfo.Make!=null">
+                            <div style="width: 100%;" data-ng-model="ModelData.Model" custom-select-options="ModelCustomOptions"
+                                custom-select="f.Model for f in ModelData | filter: $searchTerm" autofocus>
+                            </div>
+                            <p id="PVehilceModelError">
+                            </p>
+                        </div>
+                        <div id="divExternalFittedBlock" style="display: none;">
+                            <div class="form-group" data-ng-show="ObjMotorInfo.Make!='' && ObjMotorInfo.Make!=null && ObjMotorInfo.Model!='' && ObjMotorInfo.Model!=null">
+                                <select class="form-control" data-val="true" id="ddlFuelType" data-ng-model="ObjMotorInfo.Fuel"
+                                    ng-change="GetVehicleMappingData();">
+                                    <option value="">Select Fuel</option>
+                                    <option data-ng-repeat="Fuel in FuelTypes" value="{{Fuel}}">{{Fuel}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group" data-ng-show="ObjMotorInfo.Fuel!='' && ObjMotorInfo.Fuel!=null">
+                                <div style="width: 100%;" data-ng-model="ObjMotorInfo.VariantInfo" custom-select-options="VariantcustomOptions"
+                                    custom-select="f.VariantInfo for f in VariantInfo | filter: $searchTerm" autofocus>
+                                </div>
+                                <p id="PVariantInfoError">
+                                </p>
+                            </div>
+                            <div data-ng-show="(ObjMotorInfo.Fuel | uppercase)=='PETROL'">
+                                <div class="form-group">
+                                    <label>
+                                        Is External Bi-Fuel Fitted ?</label>
+                                    <label class="radio-inline" style="margin-left: 5px;">
+                                        <input type="radio" name="Is_Externaly_Bifuel_Fitted" data-ng-value="true" data-ng-model="ObjMotorInfo.Is_Externaly_Bifuel_Fitted" />
+                                        <span class="label-text">Yes</span>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="Is_Externaly_Bifuel_Fitted" data-ng-value="false" data-ng-model="ObjMotorInfo.Is_Externaly_Bifuel_Fitted" />
+                                        <span class="label-text">No</span>
+                                    </label>
+                                </div>
+                                <div data-ng-show="ObjMotorInfo.Is_Externaly_Bifuel_Fitted">
+                                    <div class="form-group">
+                                        <label>
+                                            Externally Fitted Fuel ?</label>
+                                        <label class="radio-inline" style="margin-left: 5px;">
+                                            <input type="radio" name="Externaly_Fitted_Fuel" value="CNG" data-ng-model="ObjMotorInfo.Externaly_Fitted_Fuel" />
+                                            <span class="label-text">CNG</span>
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="Externaly_Fitted_Fuel" value="LPG" data-ng-model="ObjMotorInfo.Externaly_Fitted_Fuel" />
+                                            <span class="label-text">LPG</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            Bi-fuel Kit Value</label>
+                                        <input type="text" class="form-control" id="txtBiFuelKitValue" placeholder="Bifuel kit value"
+                                            data-val="true" data-val-type="number" data-val-min-number="10000" data-val-max-number="80000"
+                                            data-ng-model="ObjMotorInfo.BiFuelKit_Value" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div style="width: 100%;" data-ng-model="ObjMotorInfo.RTOName" custom-select-options="RTOcustomOptions"
+                                custom-select="k.RTOName for k in RTOData | filter: $searchTerm">
+                            </div>
+                            <p id="PRTOMasterError">
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" data-val="true" data-ng-model="ObjMotorInfo.Registration_Date"
+                                    data-val-type="date" data-val-date-maxyears="0" data-val-date-minyears="20" autocomplete="off"
+                                    class="form-control" id="txtRegDate" placeholder="Search For a Car" value="Search For a Car"/>
+                                <div id="divCalenderIcon" class="input-group-addon">
+                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" data-val="true" data-ng-model="ObjMotorInfo.Registration_Date"
+                                    data-val-type="date" data-val-date-maxyears="0" data-val-date-minyears="20" autocomplete="off"
+                                    class="form-control" id="txtRegDate" placeholder="Search For a Car" value="Search For Your RTO Location"/>
+                                <div id="divCalenderIcon" class="input-group-addon">
+                                    <span class="glyphicon glyphicon-triangle-bottom"></span>
+                                </div>
+                            </div>
+                        </div>
+                       
+
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" data-val="true" data-ng-model="ObjMotorInfo.Registration_Date"
+                                    data-val-type="date" data-val-date-maxyears="0" data-val-date-minyears="20" autocomplete="off"
+                                    class="form-control" id="txtRegDate" placeholder="Registered Date (DD/MM/YYYY)" />
+                                <div id="divCalenderIcon" class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" data-val="true" data-val-type="email" data-ng-model="ObjMotorInfo.Email"
+                                id="txtEmail" class="form-control" placeholder="Enter your email address" />
+                        </div>
+                        <div class="form-group">
+                            <p class="small" style="font-size: 11px; ">By clicking on Start Saving Money, you agreed to our <a href="/privacy-and-security" target="_blank">Privacy & Security</a> and <a href="/terms-and-conditions" target="_blank">Terms & Conditions</a>.</p>
+                            <input type="submit" id="btnGetQuotes" class="btn btn-primary btn-block" value="Start Saving Money" style="background: #3da291;" />
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-xs-6">
+                            <div style="color: #FF9900;"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></div>
+                            1,000+ Reviews
+                        </div>
+                        <div class="col-xs-6">
+                            Been Here Before?<br>
+                            <a href="/login">Get Back to My Quotes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end Start Saving Money on Insurance Policy -->
+    
+    <!-- start We work with 40+ top insurance companies -->
+    <section id="insurance-companies">
+        <div class="container">
+            <h2 class="text-center" style="margin-bottom: 20px;">We work with 40+ top insurance companies</h2>
+            <div class="row">
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/aegon-life-logo.jpg" alt="Aegon Life" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/kotak-general-insurance.png" alt="Kotak General Insurance" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/bajaj-alianz.png" alt="Bajaj Alianz" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="clearfix visible-xs-block"></div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/bharti-axa.png" alt="Bharti Axa" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/tata-aia-logo.jpg" alt="TATA AIA" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/future-generali.png" alt="Future Generali" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="clearfix visible-xs-block"></div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/sbi-life-logo.jpg" alt="SBI Life" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/hdfc-ergo.png" alt="HDFC Ergo" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/iffco-tokio.png" alt="Iffco Tokio" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="clearfix visible-xs-block"></div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/icici-logo.jpg" alt="ICICI" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/iSelect_star_Logo.png" alt="Canara HSBC" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/hdfc-life-logo.jpg" alt="HDFC life" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="clearfix visible-xs-block"></div>
+                <div class="clearfix visible-sm-block"></div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/edelweiss_logo.png" alt="Edelweiss" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/liberty-videocon.png" alt="Liberty Videocon" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/national-insurance.png" alt="National Insurance" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="clearfix visible-xs-block"></div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/oriental-logo.png" alt="Oriental" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/new-india-assurance.png" alt="New India Assurance" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/pnb-metalife-logo.jpg" alt="Pnb Metalife" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="clearfix visible-xs-block"></div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/rahejaqbe.jpg" alt="Raheja QBE" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/reliance.png" alt="Reliance General Insurance" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/sbi.png" alt="SBI" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="clearfix visible-xs-block"></div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/royal-sundaram.png" alt="Royal Sundaram" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/shriram-logo.png" alt="Shriram" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/universalsompoo.png" alt="Universal Sompo" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="clearfix visible-xs-block"></div>
+                <div class="clearfix visible-sm-block"></div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/digit.png" alt="Digit" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/united-india-insurance.png" alt="United India" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/tata-aig.png" alt="TATA AIG" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="clearfix visible-xs-block"></div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/aditya_capital_Logo.png" alt="Aditya Birla Capital" class="img-responsive center-block img-thumbnail">
+                </div>
+                
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/kotak-life.jpg" alt="Kotak Life" class="img-responsive center-block img-thumbnail">
+                </div>
+                
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/manipal ttk.jpg" alt="Manipal Cigna" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="clearfix visible-xs-block"></div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/barati-life.jpg" alt="Barati AXA" class="img-responsive center-block img-thumbnail">
+                </div>
+                <div class="col-xs-4 col-sm-1">
+                    <img src="images/max bupa.jpg" alt="Max Bupa" class="img-responsive center-block img-thumbnail">
+                </div>
+                
+                <div class="col-xs-4 col-sm-1">
+                        <img src="images/aditya-health.jpg" alt="Aditya Birla Health Insurance" class="img-responsive center-block img-thumbnail">
+                    </div>
+                <div class="clearfix visible-xs-block"></div>
+            </div>
+        </div>
+    </section>
+
+<!-- end We work with 40+ top insurance companies -->
+
+<!-- Start How PolicyBachat works -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="text-center" style="padding-bottom: 30px;">How PolicyBachat works</h2>
+            <div class="row text-center">
+                <div class="col-sm-4" style="padding-top: 20px;">
+                    <p style="margin-bottom: 30px;">
+                        <img src="images/compare.png" alt="Compare">
+                    </p>
+                    <h4>Compare</h4>
+                    <p class="text-left">Answer a few questions, we'll provide accurate live quotes with a side-by-side comparison from top insurance companies.</p>
+                </div>
+                <div class="col-sm-4" style="padding-top: 20px;">
+                    <p style="margin-bottom: 30px;">
+                        <img src="images/pick.png" alt="Pick">
+                    </p>
+                    <h4>Pick</h4>
+                    <p class="text-left">Shop smart and Save by picking the insurer that will provide you with the most discounts.</p>
+                </div>
+                <div class="col-sm-4" style="padding-top: 20px;">
+                    <p style="margin-bottom: 30px;">
+                        <img src="images/buy.png" alt="Buy Online">
+                    </p>
+                    <h4>Buy Online</h4>
+                    <p class="text-left">Get the policy you want the way you want it or schedule a call with an agent. Buy online  and save money.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- end How PolicyBachat works -->
+
+<!-- start The benefits of comparing with PolicyBachat -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center" style="padding-bottom: 30px;">The benefits of comparing with PolicyBachat</h2>
+            <div class="row text-center">
+                <div class="col-sm-4" style="padding-top: 20px;">
+                    <p style="margin-bottom: 30px;">
+                        <img src="images/piggy-bank.svg" alt="Save Money" height="90">
+                    </p>
+                    <h4>Save Money</h4>
+                    <p class="text-left">Get a side-by-side comparison from top insurance companies, so you can pick the best deal.</p>
+                </div>
+                <div class="col-sm-4" style="padding-top: 20px;">
+                    <p style="margin-bottom: 30px;">
+                        <img src="images/passage-of-time.svg" alt="Save Time" height="90">
+                    </p>
+                    <h4>Save Time</h4>
+                    <p class="text-left">Quick and easy to compare and save time with our single entry multi carrier interface.</p>
+                </div>
+                <div class="col-sm-4" style="padding-top: 20px;">
+                    <p style="margin-bottom: 30px;">
+                        <img src="images/philosophy.svg" alt="Get Peace of Mind" height="90">
+                    </p>
+                    <h4>Get Peace of Mind</h4>
+                    <p class="text-left">Rest easy knowing that you compared top insurance companies side-by-side and got the best price.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- end The benefits of comparing with PolicyBachat -->
+
+<!-- start Reviews & Overall Rating -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="text-center" style="padding-bottom: 30px;">
+                <h2>Reviews &amp; Overall Rating</h2>
+                <p>PolicyBachat has near-perfect ratings on Google and Facebook. Here’s what our customers are saying.</p>
+            </div>
+            <p align="center" style="margin-bottom: 30px;">
+                <a href="https://www.google.com/search?q=policybachat&amp;oq=policybachat&amp;aqs=chrome..69i57j69i60l3j69i65l2j69i60l2.7369j0j1&amp;sourceid=chrome&amp;ie=UTF-8#lrd=0x3bcb96cb3333371f:0x998e49a8cd004384,1,,,">
+                    <img src="Images/over-all-rating.png" alt="PolicyBachat Ratings">
+                </a>
+            </p>
+            <div id="carousel-reviews-car" class="carousel slide" data-ride="carousel" data-interval="false">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-reviews-car" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-reviews-car" data-slide-to="1" class=""></li>
+                    <li data-target="#carousel-reviews-car" data-slide-to="2" class=""></li>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <div class="row" style="margin-top: 20px;">
+                            
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"nikhila from your team has been extremely helpful and relentlessly followed up with me to complete the policy.  "</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            SHEKAR GANESH
+                                                        </strong>
+                                                        <br>
+                                                        July 09, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"excellent service provided by policy bachat. i will recommend to go through it"</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            RAJKUMAR CHATURVEDI
+                                                        </strong>
+                                                        <br>
+                                                        June 06, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"i have purchased this policy through agent "sodha bekesh", he is very polite and customer friendly .  explained all features and benefits of the policy and over the call it self i could get convince and made payment  immediately after some time.
+
+thanks bekesh for all your help/ assistance ."</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            CHANDRASEKHAR SISTA
+                                                        </strong>
+                                                        <br>
+                                                        May 28, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"your agent lava kumar a was helpful in choosing the car insurance policy from your company. wide varity of companies quotes to select from ."</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            LEELA JOSE VADAKKAN
+                                                        </strong>
+                                                        <br>
+                                                        May 21, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="row" style="margin-top: 20px;">
+                            
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"excellent.very well guided by mr. raju."</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            OMPRAKASH GUPTA
+                                                        </strong>
+                                                        <br>
+                                                        May 21, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"great service by syed samiullah hussaini."</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            MAMTA ARYA
+                                                        </strong>
+                                                        <br>
+                                                        May 20, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"good service."</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            SANJAY SAXENA
+                                                        </strong>
+                                                        <br>
+                                                        May 20, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"good follow up from the executives."</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            JK TYRE AND INDUSTRIES LTD
+                                                        </strong>
+                                                        <br>
+                                                        January 12, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="row" style="margin-top: 20px;">
+                            
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"it's good "</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            PATEL IDRESH ABDULSALAM
+                                                        </strong>
+                                                        <br>
+                                                        January 11, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"at lowest cost i got the insurance renewed."</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            SACHIDANAND SINGH
+                                                        </strong>
+                                                        <br>
+                                                        January 09, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"the assistant received from the caller is fantastic. he is enthusiastic, full of energy and having patience to convince the customer and also helped to get the policy renewed. guided and suggested about the policy and the details which as a customer every body feel like to listen before renewal. talking to un unknown man who made you comfortable and also make you feel that he cares for you.
+
+great!!! "</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            SANTANU CHAUDHURI
+                                                        </strong>
+                                                        <br>
+                                                        January 07, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-xs-6 col-sm-3">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <div style="text-align: left;" class="item">
+                                                    <p class="text-capitalize">
+                                                        <em>"very good"</em>
+                                                    </p>
+                                                    <p>
+                                                        <span style="color: #FF9900;">
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+                                                            <span class="glyphicon glyphicon-star"></span>
+
+                                                        </span>
+                                                        <br>
+                                                        <strong>
+                                                            HIRANYA JYOTI DAS
+                                                        </strong>
+                                                        <br>
+                                                        January 05, 2021
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- end Reviews & Overall Rating -->
+
+
+
+<!-- start Frequently Asked Questions -->
+    <section class="section">
+        <div class="container">
+          <h2 class="text-center" style="padding-bottom: 30px;">Frequently Asked Questions</h2>
+    <div class="row">
+            <div class="col-sm-6">
+              <dl>
+                <dt>What is PolicyBachat?</dt>
+                <dd>PolicyBachat is an online insurance web aggregator where you can compare the insurance quotes from all insurance companies in one place. PolicyBachat is ONE of the top three insurance web aggregators in India serving customers with a high level of commitment and dedication.</dd>
+                <dt>Is PolicyBachat safe?</dt>
+                <dd>PolicyBachat is a registered online insurance web aggregator licensed by Insurance Regulatory and Development Authority of India (Reg No. IRDAI/WBA30/2016). We are registered as Deztination Insurance Web Aggregators Private Limited. All insurance transactions conducted through our website are legal and safe.</dd>
+                <dt>Are PB insurance quotes competitive?</dt>
+                <dd>Any insurance quote on PolicyBachat is quite competitive when compared to those from other insurance companies. The advantage of having PolicyBachat is that the quotes from several different insurance companies are made available in one place thereby empowering the customer to “Start Saving Money” immediately by using our portal.</dd>
+              </dl>
+            </div>
+            <div class="col-sm-6">
+              <dl>
+                <dt>What should I do if my insurance premium payment is not processed?</dt>
+                <dd>The premium is not paid directly to PolicyBachat. Instead, we are here to facilitate a smooth transaction between the insurance company and the customer. When you select an insurance company, their payment page will list the details for online payment. In case of any dispute regarding payment status, we can get the payment credit status from the insurance company for you. If the payment is not successful, the amount would be credited back to your account within 7 working days depending on the mode of payment.</dd>
+                <dt>How accurate are PB insurance quotes?</dt>
+                <dd>PolicyBachat provides the quotes as received directly from the insurance companies. The premium shown on the quote comparison page will be the same as that listed on the payment page. We can guarantee that there will not be a change in the quoted premium amount at the time of payment.</dd>
+                <dt>How can I pay my insurance premium?</dt>
+                <dd>PolicyBachat provides you with different options to pay your insurance premium. You can pay using your Internet Banking, Credit or Debit cards, UPI or any other wallet such as Google Pay, Paytm, or PhonePe. Payments made through PolicyBachat are 100% safe, secure and reliable.</dd>
+              </dl>
+            </div>
+          </div>
+          <div> 
+            
+            <!-- Nav tabs -->
+               
+            <ul class="list-inline text-center list-tabs">
+                
+              <li class="active"><a href="#car" data-toggle="tab">Car Insurance</a></li>
+    
+              <li><a href="#life" data-toggle="tab">Life Insurance</a></li>
+              <li><a href="#health" data-toggle="tab">Health Insurance</a></li>
+            </ul>
+            
+            <!-- Tab panes -->
+              
+            <div class="tab-content" style="padding: 15px 0;">
+                
+              <div class="tab-pane active" id="car">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <dl>
+                      <dt>How to buy car insurance online from PolicyBachat?</dt>
+                      <dd>Car insurance can be purchased online from PolicyBachat portal <a href="/car-insurance">https://www.policybachat.com/car-insurance</a> in two easy steps. In first step you need to enter the details of your car such as Make, Model, Date of registration, RTO location and click on submit to proceed to the next page. In the second step you can adjust the IDV or add riders to increase the coverage. The third and final step would be the payment where you will be directed to payment page of the insurance company to complete the payment process.</dd>
+                      <dt>What are the factors that help in deciding policy for your car?</dt>
+                      <dd>Best car insurance should be decided on the basis of the Insured declared value (IDV) offered by the insurance companies, Add-ons offered, Number of Cashless garages in your location, Premium quoted before deciding on the purchase of your car insurance policy. These factors should be compared at the time of car insurance policy purchase.</dd>
+                      <dt>What if the car insurance policy expires?</dt>
+                      <dd>Car insurance can be renewed even after its expiry. The process to renew involves a pre inspection of the vehicle by the insurance company to ascertain the risk involved. Post positive inspection report the insurance company would issue the policy subject to the receipt of payment. The pre inspection of .your car would be carried out by the insurance company or you can do self inspection with the link provided by the insurance company.</dd>
+                      <dt>What is depreciation in car insurance?</dt>
+                      <dd>Depreciation is the reduction in the value of an asset over a period of time due to wear and tear as a result of usage. The depreciation in car insurance is calculated each year and is taken as 10% reduction each on an average. The depreciation is also accounted at the time of claim settlement in car insurance.</dd>
+                      <dt>Can I Take Fresh Policy For Brand New Vehicle?</dt>
+                      <dd>Yes, a fresh insurance policy should be taken for a brand new vehicle. You can purchase a new insurance policy for your brand new car from our portal <a href="/car-insurance">https://www.policybachat.com/car-insurance</a> instantly.</dd>
+                      <dt>What happens if I don’t renew my policy on time?</dt>
+                      <dd>Your car insurance policy will be lapsed if it is not renewed on or before the expiry date. Once the policy is expired the coverage would be lapsed and your car would be uninsured. To renew the policy, you need to approach your insurance company where they’ll conduct an inspection before issuing the policy.</dd>
+                    </dl>
+                  </div>
+                  <div class="col-sm-6">
+                    <dl>
+                      <dt>How to compare car insurance quotes online?</dt>
+                      <dd>Car insurance quotes can be compared online on our portal <a href="/car-insurance">https://www.policybachat.com/car-insurance</a> where you can get the quotes from different insurance providers. The comparison can be done in 2 easy steps by entering the basic details of your car and clicking on submit button. You can read more about Compare Car insurance quotes online here <a href="/articles/compare-car-insurance-online">https://www.policybachat.com/articles/compare-car-insurance-online</a>.</dd>
+                      <dt>How to use car insurance calculator?</dt>
+                      <dd>Car insurance calculator can be used to calculate the premium of your car. The process of using car insurance calculator is simple. You can find the car insurance premium calculator on <a href="/articles/car-insurance-premium-calculator">https://www.policybachat.com/articles/car-insurance-premium-calculator</a>. To calculate the premium of your car, you need to enter the details such as Make, Model of your car, RTO location, Date of registration of your car etc.</dd>
+                      <dt>Is it necessary to take bumper to bumper car insurance?</dt>
+                      <dd>Bumper to bumper cover or nil depreciation or zero depreciation is an add-on in the car insurance policy. This add-on can be availed on payment of extra premium at the time of policy purchase. The bumper to bumper covers the cost of depreciation at the time of claim, in other words the insurance company would not factor for depreciation at the time of claim if bumper to bumper cover is opted.</dd>
+                      <dt>What are the necessary documents required for a Car Insurance claim?</dt>
+                      <dd>The necessary documents required for making a claim under your car insurance policy are:
+                        <ul>
+                          <li>Registration Certificate (RC Copy) of your car, which should be valid at the time of accident.</li>
+                          <li>Surveyor report stating the ascertaining the reason of loss, quantum of loss etc.</li>
+                          <li>Duly filled and signed claim form.</li>
+                          <li>Copy of the your car insurance policy</li>
+                          <li>An Estimate of the vehicle repair cost</li>
+                          <li>Valid licence copy of the driver at the time of accident</li>
+                          <li>Copy of the FIR/ Panchanama registered</li>
+                          <li>In case of theft, official intimation to RTO and Letter of subrogation along with the Car keys should be submitted to your insurance company to process the claim.</li>
+                        </ul>
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="life">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <dl>
+                      <dt>What is life insurance?</dt>
+                      <dd>Life insurance is a contract between the life insurance company and the insured customer wherein the insurance company agrees to pay the maturity benefit to the insured or the death benefit to the nominee of the insured in return for a nominal amount known as “Premium” which is to be paid by the insured customer to the insurance company on regular intervals. Life insurance is a long term contract unlike the health and motor insurance. The minimum period of a life insurance contract would be 5 years and can extend up to 99 years depending on the type of policy.</dd>
+                      <dt>What is a term insurance?</dt>
+                      <dd>Term insurance is a type of life insurance in which the insurance company pays the death claim of the insured to the nominee of the insured in return for a premium. Term insurance provides the claim in case of untimely death of an insured. The term insurance is a long term contract between the insurance company and the insured customer. As the name suggests term insurance is a life insurance plan taken for a particular period of term (years). </dd>
+                      <dt>What are the types of term insurance available in India?</dt>
+                      <dd>
+                        <p> Term  insurance is available in many types in India, they are:-</p>
+                        <ul>
+                          <li><strong>Increasing term insurance</strong>-  The coverage increases each year in a specified percentage i.e. 5% or 10% and  the total increased sum insured doesn’t cross the basic sum insured chosen by  the insured customer.</li>
+                          <li><strong>Decreasing term insurance</strong> – As the name suggests the coverage is decreased each year over a period of  time. The sum insured decreases at certain percentage each year.</li>
+                          <li><strong>Money back term insurance</strong> – The premiums paid are returned to the customer at the time of maturity and in  case of death of the customer the claim is paid.</li>
+                          <li><strong>Pure term insurance</strong> – In  pure term insurance, claim is paid only on the death of the policy holder. No  survival benefits are paid to the customer in case of survival till the end of  the policy period.</li>
+                        </ul>
+                      </dd>
+                      <dt>How is a term insurance plan different from other life insurance plans?</dt>
+                      <dd>Term insurance is a type of life insurance plan which only focuses on the coverage of life and the claim is payable only in case of death of the policyholder while the other life insurance plans are seen as a tool for savings. Other life insurance plans provide both the maturity benefit as well as death benefit to the policyholder. Term insurance is typically an insurance tool to provide claim in case of death while the other life insurance plans are saving tools. </dd>
+                      <dt>Why should I buy a term policy?</dt>
+                      <dd>Life is unstable and we need a backup plan to provide financial security to our family. In case of sudden demise, family might face financial hardships due to the death of the earning member of the family. A term policy covers the children education costs, clears the outstanding loans and provides income to the family of the policyholder in case of untimely demise of the insured. </dd>
+                    </dl>
+                  </div>
+                  <div class="col-sm-6">
+                    <dl>
+                      <dt>When should I buy a term policy?</dt>
+                      <dd>There is no better time to by a term life insurance policy. It is better now than never to purchase life insurance policy. Ideally one should purchase a term insurance policy immediately after starting a job. Early term insurance purchase results in lower premiums to be paid to the insurance companies. The term insurance premium depends on the age of the proposer and thereby increases with increase in age. </dd>
+                      <dt>Do I need to buy term insurance even if I’m covered under my company’s group policy?</dt>
+                      <dd>Employer sponsored life insurance policy would be valid only till the time you are on the payroll of the organization. If is advisable to have a separate term insurance plan after analysing your liabilities and outstanding loans to maintain a healthy financial condition of your family in case of your sudden demise. It can also be noted that the company sponsored life insurance coverage would not be sufficient to meet your financial goals as the company offers minimum life insurance coverage without considering your liabilities. </dd>
+                      <dt>Are there any age limits for buying a term policy?</dt>
+                      <dd>Most of the insurance companies restrict the maximum entry age to buy a term insurance policy to 65 years. This is due the general practice that most of the people retire at the age band 60-65 and also would be free from all the financial obligations and liabilities, hence there would be no need to have a term insurance policy. The minimum entry age for a term insurance policy is 18 years while the maximum entry age is 65 years. Once the term policy is taken the term can be chosen by the proposer, the younger the proposer higher the term period.</dd>
+                      <dt>How to select the best term policy for myself?</dt>
+                      <dd>The  best term insurance policy can be selected online on our portal <a href="https://www.policybachat.com/life-insurance">https://www.policybachat.com/life-insurance</a> by comparing the premiums from different insurance companies. It is advisable to  talk to our expert regarding your requirements which helps them in guiding you  to pick the best term insurance plan in India. The best term insurance plan is  the one which offers best coverage at reasonable premium.</dd>
+                      <dt>What are the benefits of buying a term insurance policy online?</dt>
+                      <dd>
+                        <p> There  are many benefits in buying a term insurance policy online. Few of them are  listed below:-</p>
+                        <ul>
+                          <li><strong>Lesser premium -</strong> The  premium to be paid is less in case of online term insurance plans when compared  with the offline modes. This is due to the less administrative costs involved  with online purchase. </li>
+                          <li><strong>Comparison –</strong> When  purchasing online you can have many options to select from. The term insurance  plans and premium from different companies would be displayed on the portal  when you make a purchase online. </li>
+                          <li><strong>Save Time &amp; Energy</strong> -  Both time and energy can be saved by purchasing term insurance plan online. You  can purchase the policy by sitting at your home and paying the premium online  without requiring moving out of your comfort zone in most of the cases. These  days most of the insurance companies are not stressing on physical medical  tests as they are conducting telephonic tests which forms the health  declaration of your proposal form. </li>
+                        </ul>
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="health">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <dl>
+                      <dt>What is health insurance?</dt>
+                      <dd>Health insurance is an agreement between the insurance company and the insured customer where the insurance company agrees to settle the claim in case of hospitalization due to an accident or illness in return for a considerable amount to be paid which is known as Premium. The agreement is valid only for a period of the mentioned policy term after which the policy has to be renewed.</dd>
+                      <dt>Is health insurance important?</dt>
+                      <dd>Health insurance is one of the most important financial planning tools available in the market. Without a health insurance you might be forced to dig out your savings and liquidate your assets in case of hospitalization. There are few people who take out personal loans to settle their hospital bills as there was no health insurance policy for them.</dd>
+                      <dt>Is hospitalization always necessary to get a claim?</dt>
+                      <dd>Health insurance is mainly taken in case of hospitalization due to an illness or accident. There is a provision in health insurance policy to get the claim without hospitalization; this provision is known as the domiciliary treatment where the insured customer can get treated for his/her illness or disease from one’s home. In health insurance there is provision for OPD also known as Out Patient expense which doesn’t require hospitalization. Hence, hospitalization is not necessary to get a claim in health insurance.</dd>
+                      <dt>What is depreciation in car insurance?</dt>
+                      <dd>Depreciation is the reduction in the value of an asset over a period of time due to wear and tear as a result of usage. The depreciation in car insurance is calculated each year and is taken as 10% reduction each on an average. The depreciation is also accounted at the time of claim settlement in car insurance.</dd>
+                      <dt>Can the sum insured be increased at the time of renewal?</dt>
+                      <dd>Yes. The sum insured can be increased at the time of renewal. A formal request is to be made to your insurance company to increase your sum insured at the time of renewal. It is to be noted that the extra premium for the increased sum insured should be paid to the insurance company and other conditions such as Pre existing waiting period, specific disease waiting period etc. should be satisfied for the increased sum insured.</dd>
+                    </dl>
+                  </div>
+                  <div class="col-sm-6">
+                    <dl>
+                      <dt>Is there an age limit up to which the policy would be renewed?</dt>
+                      <dd>Yes. In general there would be the minimum and maximum age limit for every type of health insurance policy. The maximum limit in general would be 60 or 65 years in most of the health insurance policies available in the market. There are several health insurance policies in the market which are known as “Senior citizen health insurance” which provide health insurance coverage to senior citizens. It is advisable to check with our agent before taking the health insurance policy.</dd>
+                      <dt>Can the insurance company refuse to renew the policy?</dt>
+                      <dd>No. Health Insurance Company cannot refuse to renew your health insurance policy unless there is a valid reason such as declaration of incorrect facts or activities of fraud. But health insurance companies may not send you your renewal notice in case of high claim ratio on your health insurance policy in the previous year. In case your health insurance policy is refused for renewal by the insurance company without a valid reason, you can file a complaint with the Insurance regulatory and Development authority. </dd>
+                      <dt>Can I make a claim immediately after taking the policy?</dt>
+                      <dd>Yes, you can make only an accident related claim immediately after taking the health insurance policy. Other claims for illness and diseases can be made only after satisfying the waiting period mentioned in the health insurance policy. There is a initial waiting period of 30 days for every health insurance policy which has to be satisfied by the insured before making a claim (except for accident related claims). In addition to the initial waiting period there is Specific disease waiting period and Pre existing disease waiting period which needs to be satisfied by the insured before making any claim.</dd>
+                      <dt>What is Cashless hospitalization?</dt>
+                      <dd>Cashless hospitalization is the process in which in the insured would get admitted in the hospital for treatment and the costs would be borne by the insurance company. The hospitalization cost would be paid to the hospital by the insurance company directly without the intervention of the customer. For this the insurance companies discuss packages with the hospitals and fix a price for a particular type of treatment. Cashless hospitalization is the best mode of claim settlement in a health insurance policy as the rising hospitalization costs are posing a serious threat to the people and causing a huge dent in their savings during hospitalization. </dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+<!-- End Frequently Asked Questions -->
+
+<!-- Start Article of the Week -->
+      <section class="section bg-light">
+        <div class="container">
+            <h2 align="center">Article of the Week</h2>
+            <div class="row">
+                
+                <div class="col-sm-6" style="padding-top: 30px;"><a href="/car/article-of-the-week"><img src="https://www.policybachat.com/ArticlesImages/631.jpg" alt="Image of Bajaj Allianz Car insurance FAQs" class="img-responsive center-block"></a></div>
+                <div class="col-sm-6" style="padding-top: 30px;"><h3><a href="/car/article-of-the-week">Bajaj Allianz Car insurance FAQs</a></h3>
+                <p>Frequently asked questions for Bajaj Allianz Car insurance </p> 
+                    
+                <p>Yes, you can purchase Bajaj Allianz car insurance policy online from the online portal <a href="https://www.policybachat.com/car-insurance">https://www.policybachat.com/car-insurance</a> by entering the details of your car such as Make &amp; Model, Year of registration, RTO location etc.</p>
+    
+                </div>
+                                
+                
+                <!--<div class="col-sm-6">
+                     <p style="text-align:center">                
+                    <a id="MainContent_ancReadMore" class="pull-left" style="display: block; cursor: pointer">Read More</a>
+                        </p>
+                   </div>-->
+               
+            </div>
+            </div>
+        </section>
+        <!-- End Article of the Week -->
+        
+        <!-- start Your Source and complete guide to Insurance -->
+
+        <section class="section latest-article">
+            <div class="container">
+                <div class="text-center" style="padding-bottom: 30px;">
+                    <h2>Your Source and complete guide to Insurance</h2>
+                </div>
+                <h3 class="text-center" style="margin-bottom: 20px;">Car Insurance</h3>
+                <div class="row">
+                    
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/bajaj-allianz-car-insurance-online-renewal">
+                                    <img src="ArticlesImages/630.jpg" alt="Image of Bajaj Allianz Car Insurance: Online Renewal" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Bajaj Allianz Car Insurance: Online Renewal</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/car-insurance-renewal-calculation">
+                                    <img src="ArticlesImages/553.jpg" alt="Image of Car Insurance Renewal Calculation" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Car Insurance Renewal Calculation</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/car-insurance-faqs">
+                                    <img src="ArticlesImages/508.jpg" alt="Image of Car Insurance FAQs" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Car Insurance FAQs</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/benefits-of-car-insurance">
+                                    <img src="ArticlesImages/505.jpg" alt="Image of Benefits of Car Insurance" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Benefits of Car Insurance</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/four-wheeler-insurance-in-india">
+                                    <img src="ArticlesImages/482.jpg" alt="Image of Four Wheeler Insurance In India" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Four Wheeler Insurance In India</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/mahindra-mahindra-car-insurance-cost-in-india">
+                                    <img src="ArticlesImages/481.jpg" alt="Image of Mahindra-Mahindra Car Insurance Cost In India" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Mahindra-Mahindra Car Insurance Cost In India</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/toyota-car-insurance-cost-in-india">
+                                    <img src="ArticlesImages/479.jpg" alt="Image of Toyota Car Insurance Cost In India" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Toyota Car Insurance Cost In India</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/tata-car-insurance-cost-in-india">
+                                    <img src="ArticlesImages/478.jpg" alt="Image of Tata Car Insurance Cost In India" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Tata Car Insurance Cost In India</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                </div>
+                <h3 class="text-center" style="margin-bottom: 20px;">Two Wheeler Insurance</h3>
+                <div class="row">
+                    
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/bajaj-allianz-bike-insurance-online-renewal">
+                                    <img src="ArticlesImages/607.jpg" alt="Image of Bajaj Allianz Bike Insurance: Online Renewal" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Bajaj Allianz Bike Insurance: Online Renewal</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/bike-insurance-renewal-premium">
+                                    <img src="ArticlesImages/577.jpg" alt="Image of Factors Affecting Bike Insurance Renewal Premium" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Factors Affecting Bike Insurance Renewal Premium</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/compare-bike-insurance-online">
+                                    <img src="ArticlesImages/576.jpg" alt="Image of Compare Bike Insurance Online" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Compare Bike Insurance Online</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/ways-to-reduce-two-wheeler-insurance-premium-calculator">
+                                    <img src="ArticlesImages/514.jpg" alt="Image of Ways to reduce two wheeler insurance premium calculator" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Ways to reduce two wheeler insurance premium calculator</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/factors-influencing-two-wheeler-insurance-premium-calculators">
+                                    <img src="ArticlesImages/513.jpg" alt="Image of Factors  influencing two wheeler insurance premium calculators" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Factors  influencing two wheeler insurance premium calculators</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/two-wheeler-insurance-premium-calculator">
+                                    <img src="ArticlesImages/512.jpg" alt="Image of Two wheeler insurance premium calculator" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Two wheeler insurance premium calculator</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/benefits-of-two-wheeler-insurance">
+                                    <img src="ArticlesImages/507.jpg" alt="Image of Benefits of Two-Wheeler Insurance" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Benefits of Two-Wheeler Insurance</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/best-motorcycle-insurance-in-india">
+                                    <img src="ArticlesImages/483.jpg" alt="Image of Best Motorcycle Insurance in India" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Best Motorcycle Insurance in India</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                </div>
+                <h3 class="text-center" style="margin-bottom: 20px;">Health Insurance</h3>
+                <div class="row">
+                    
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/benefits-of-health-insurance-calculator">
+                                    <img src="ArticlesImages/511.jpg" alt="Image of Benefits  of Health insurance calculator" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Benefits  of Health insurance calculator</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/factors-influencing-health-insurance-premium-calculation">
+                                    <img src="ArticlesImages/510.jpg" alt="Image of Factors  influencing health insurance premium calculation" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Factors  influencing health insurance premium calculation</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/best-health-insurance-calculator">
+                                    <img src="ArticlesImages/509.jpg" alt="Image of Best Health Insurance Calculator" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Best Health Insurance Calculator</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/benefits-of-health-insurance-in-india">
+                                    <img src="ArticlesImages/506.jpg" alt="Image of Benefits of Health Insurance in India" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Benefits of Health Insurance in India</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/best-health-insurance-company-in-india">
+                                    <img src="ArticlesImages/456.jpg" alt="Image of Best Health Insurance Company In India" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Best Health Insurance Company In India</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/group-health-insurance-vs-individual-health-insurance">
+                                    <img src="ArticlesImages/453.jpg" alt="Image of Group Health Insurance vs Individual Health Insurance " class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Group Health Insurance vs Individual Health Insurance </h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/advantages-and-disadvantages-of-health-care-insurance">
+                                    <img src="ArticlesImages/435.jpg" alt="Image of Advantages and Disadvantages of Health Care Insurance" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Advantages and Disadvantages of Health Care Insurance</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/sum-insured-enhancement-or-new-policy">
+                                    <img src="ArticlesImages/417.jpg" alt="Image of Sum insured enhancement or New Policy" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Sum insured enhancement or New Policy</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                </div>
+                <h3 class="text-center" style="margin-bottom: 20px;">Life Insurance</h3>
+                <div class="row">
+                    
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/how-to-use-life-insurance-calculator">
+                                    <img src="ArticlesImages/504.jpg" alt="Image of How to use Life Insurance Calculator" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">How to use Life Insurance Calculator</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/benefits-of-life-insurance-premium-calculator">
+                                    <img src="ArticlesImages/503.jpg" alt="Image of Benefits of Life Insurance Premium Calculator" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Benefits of Life Insurance Premium Calculator</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/factors-that-influence-life-insurance-premium">
+                                    <img src="ArticlesImages/502.jpg" alt="Image of Factors that influence life Insurance Premium" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Factors that influence life Insurance Premium</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/life-insurance-premium-calculator">
+                                    <img src="ArticlesImages/501.jpg" alt="Image of Life  Insurance Premium Calculator" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Life  Insurance Premium Calculator</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/importance-of-term-insurance">
+                                    <img src="ArticlesImages/458.jpg" alt="Image of Common Term Insurance Myths" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Common Term Insurance Myths</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/compare-best-life-insurance-companies">
+                                    <img src="ArticlesImages/454.jpg" alt="Image of Compare Best Life Insurance Companies" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Compare Best Life Insurance Companies</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/types-of-term-insurance">
+                                    <img src="ArticlesImages/451.jpg" alt="Image of Types of Term Insurance" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Types of Term Insurance</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                        
+                            <div class="col-xs-6 col-sm-3">
+                                <a class="panel panel-default" href="/articles/understanding-term-life-insurance">
+                                    <img src="ArticlesImages/450.jpg" alt="Image of Understanding Term Life Insurance" class="img-responsive center-block">
+                                    <div class="panel-body">
+                                        <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Understanding Term Life Insurance</h4>
+                                    </div>
+                                </a>
+                                &nbsp;
+                            </div>
+                </div>
+            </div>
+        </section>
+        <!-- end Your Source and complete guide to Insurance -->
+
+<!-- start Coronavirus (COVID-19) Health Insurance -->
+        <section class="section  bg-light latest-article">
+            <div class="container">
+                <div class="text-center" style="padding-bottom: 30px;">
+                    <h2>Coronavirus (COVID-19) Health Insurance</h2>
+                </div>
+                <div id="carousel-articles-corona" class="carousel slide" data-ride="carousel" style="margin-bottom: 60px;" data-interval="false">
+                    
+                    
+                    <div class="row">
+                        
+                                <div class="col-xs-6 col-sm-3">
+                                    <a class="panel panel-default" href="/articles/corona-kavach-health-insurance-policy">
+                                        <img src="ArticlesImages/500.jpg" alt="Image of Corona Kavach Health Insurance Policy" class="img-responsive center-block">
+                                        <div class="panel-body">
+                                            <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Corona Kavach Health Insurance Policy</h4>
+                                        </div>
+                                    </a>
+                                    &nbsp;
+                                </div>
+                            
+                                <div class="col-xs-6 col-sm-3">
+                                    <a class="panel panel-default" href="/articles/difference-between-corona-health-insurance-and-standard-health-insurance?">
+                                        <img src="ArticlesImages/499.jpg" alt="Image of Difference  between Corona health insurance and Standard health insurance?" class="img-responsive center-block">
+                                        <div class="panel-body">
+                                            <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Difference  between Corona health insurance and Standard health insurance?</h4>
+                                        </div>
+                                    </a>
+                                    &nbsp;
+                                </div>
+                            
+                                <div class="col-xs-6 col-sm-3">
+                                    <a class="panel panel-default" href="/articles/exclusions-under-corona-health-insurance">
+                                        <img src="ArticlesImages/498.jpg" alt="Image of Exclusions under Corona health insurance" class="img-responsive center-block">
+                                        <div class="panel-body">
+                                            <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Exclusions under Corona health insurance</h4>
+                                        </div>
+                                    </a>
+                                    &nbsp;
+                                </div>
+                            
+                                <div class="col-xs-6 col-sm-3">
+                                    <a class="panel panel-default" href="/articles/corona-specific-health-insurance-policy">
+                                        <img src="ArticlesImages/496.jpg" alt="Image of Corona specific health insurance policy " class="img-responsive center-block">
+                                        <div class="panel-body">
+                                            <h4 style="font-size: 16px; line-height: 20px; margin: 0;">Corona specific health insurance policy </h4>
+                                        </div>
+                                    </a>
+                                    &nbsp;
+                                </div>
+            
+                    </div>
+                </div>
+            </div>
+        </section>
+<!-- end Coronavirus (COVID-19) Health Insurance -->
+<!-- image dot -->
+
+        <img src="images/dots.png" alt="Dots" class="img-responsive center-block">
+        <!-- end image dot -->
+<!-- start Start Saving Money on Insurance Policy -->
+        <div class="callaction">
+            <div class="container">
+                <div class="content">
+                    <h2>Start Saving Money on Insurance Policy</h2>
+                    <p class="text">Compare Life, Health, Car and Two wheeler Insurance rates from top Insurance companies for free.</p>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h4 align="center" style="color: #5f2ee5; margin: 0 0 15px;">Compare Car Insurance Quotes</h4>
+                        <div class="form-group">
+                            <a href="javascript:void(0);" onclick="$('html,body').animate({scrollTop: 0}, 500);" class="btn btn-primary btn-lg btn-block ripple">Start Saving Money</a>
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-xs-6">
+                                <div style="color: #FF9900;"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></div>
+                                1,000+ Reviews
+                            </div>
+                            <div class="col-xs-6">
+                                Been Here Before?<br>
+                                <a href="/login">Get Back to My Quotes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   <!-- end Start Saving Money on Insurance Policy -->
+
+<!-- start footer -->
+        <section class="sc-block">
+            <div class="container">
+            <div class="row">
+            <div class="col-sm-4 company-links">
+              <h4> <a href="https://www.policybachat.com/articles">PolicyBachat Blog</a> </h4>
+              <ul class="list-unstyled">
+                   
+                            <li><a href="/articles/bajaj-allianz-car-insurance-faqs">Bajaj Allianz Car insurance FAQs</a></li>			  
+                       
+                            <li><a href="/articles/bajaj-allianz-car-insurance-online-renewal">Bajaj Allianz Car Insurance: Online Renewal</a></li>			  
+                       
+                            <li><a href="/articles/car-insurance-renewal-calculation">Car Insurance Renewal Calculation</a></li>			  
+                       
+                            <li><a href="/articles/car-insurance-faqs">Car Insurance FAQs</a></li>			  
+                       
+                            <li><a href="/articles/benefits-of-car-insurance">Benefits of Car Insurance</a></li>			  
+                                  
+              </ul>
+            </div>
+           <div class="col-sm-8">
+            <!--<h4><a href="#">Compare Car Insurance Companies</a></h4>-->
+            <h4><a href="car-insurance/cities">Car Insurance By City</a></h4>
+            <ul class="list-inline">
+                <li><a href="car-insurance/telangana/hyderabad">Hyderabad</a></li>
+                <li><a href="car-insurance/delhi/delhi">Delhi</a></li>
+                <li><a href="car-insurance/maharashtra/pune">Pune</a></li>
+                <!--<li><a href="#">Lucknow</a></li>
+                <li><a href="#">Jaipur</a></li>-->
+                <li><a href="car-insurance/karnataka/bengaluru">Bengaluru</a></li>
+                <!--<li><a href="#">Ahmedabad</a></li>
+                <li><a href="#">Chennai</a></li>-->
+                <li><a href="car-insurance/maharashtra/mumbai">Mumbai</a></li>
+                <!--<li><a href="#">Patna</a></li>-->
+              </ul>
+            <h4><a href="car-insurance/states">Car Insurance By State</a></h4>
+            <ul class="list-inline">
+                <li><a href="car-insurance/telangana">Telangana</a></li>
+                <li><a href="car-insurance/maharashtra">Maharashtra</a></li>
+                <li><a href="car-insurance/uttar-pradesh">Uttar Pradesh</a></li>
+                <li><a href="car-insurance/tamil-nadu">Tamil Nadu</a></li>
+                <li><a href="car-insurance/gujarat">Gujarat</a></li>
+                <!--<li><a href="car-insurance/telangana">Delhi</a></li>-->
+                <li><a href="car-insurance/karnataka">Karnataka</a></li>
+                <!--<li><a href="#">Rajasthan</a></li>-->
+                <li><a href="car-insurance/haryana">Haryana</a></li>
+                <!--<li><a href="#">Madhya Pradesh</a></li>-->
+              </ul>
+          </div>
+        </div>
+            </div>
+        </section>
+
+
+        <footer id="Footer" class="footer">
+            <div id="divMainFooter" class="container">
+                
+    
+
+                <div class="row" style="margin-bottom: 20px;">
+                    <div class="col-sm-2 col-xs-6">
+                        <p>
+                            <strong>Company</strong>
+                        </p>
+                        <ul class="list-unstyled">
+                            <li><a href="/aboutus" title="Read more about PolicyBachat">About Us</a></li>
+                            <li><a href="/faqs" title="Find a list of questions and answers related to PolicyBachat">FAQs</a></li>
+                            <li><a href="/contactus" title="Contact PolicyBachat customer support for your insurance needs">Contact Us</a></li>
+                            
+                            <li><a href="/articles" title="Read latest insurance articles">Articles</a></li>
+                            <li><a href="/pressrelease" title="A press releases from PolicyBachat">Press Release</a></li>
+                            
+                            
+                            <li><a href="/testmonials" title="PolicyBachat customer reviews">Reviews</a></li>
+                            
+                        </ul>
+                    </div>
+                    <div class="col-sm-2 col-xs-6">
+                        <p>
+                            <strong>Our Services</strong>
+                        </p>
+                        <ul class="list-unstyled">
+                            <li><a href="/car-insurance" title="Compare car insurance quotes online">Car Insurance</a></li>
+                            <li><a href="/two-wheeler-insurance" title="Compare two wheeler insurance quotes online">Two
+                            Wheeler Insurance</a></li>
+                            <li><a href="/health-insurance" title="Compare health insurance quotes online">Health Insurance</a></li>
+                            <li style="display: none;"><a href="/travel-insurance" title="Compare travel insurance quotes online">Travel Insurance</a></li>
+                            <li><a href="/life-insurance" title="Compare life insurance quotes online">Life Insurance</a></li>
+                            <li><a href="/life-insurance-plans" title="Compare life insurance plans online">Life Insurance Plans</a></li>
+                            <li><a href="/life-insurance-traditional-plans" title="Compare life insurance traditional plans online">Life Insurance Traditional Plans</a></li>
+
+                        </ul>
+                    </div>
+                    <div class="col-sm-4 col-xs-12">
+                        <p>
+                            <strong>Contact Information</strong>
+                        </p>
+                        <ul class="list-unstyled list-icon">
+                            <li><span class="glyphicon glyphicon-map-marker"></span>Plot-4, Road No. 45/A, Masthan
+                            Nagar, Jubilee Hills, Hyderabad - 500033, Telangana, India.</li>
+                            <li><span class="glyphicon glyphicon-earphone"></span>1800 123 4003</li>
+                            <li>
+                                <span class="glyphicon glyphicon-envelope"></span>
+                                <a href="mailto:support@policybachat.com">
+                                    <img src="images/email-support.png" alt="Email Support" class="img-responsive">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-2 col-xs-6">
+                        <p>
+                            <strong>Working Hours</strong>
+                        </p>
+                        <p>
+                            Monday to Sunday:<br>
+                            9:00 AM to 9:00 PM
+                        </p>
+                    </div>
+                    <div class="col-sm-2 col-xs-6">
+                        <p>
+                            <strong>Follow Us</strong>
+                        </p>
+                        <ul class="list-unstyled">
+                            <li><a href="https://www.facebook.com/policybachat">Facebook</a></li>
+                            <li><a href="https://twitter.com/PolicyBachat">Twitter</a></li>
+                            <li><a href="http://www.pinterest.com/policybachat/">Pinterest</a></li>
+                            <li><a href="https://www.instagram.com/policybachat97/">Instagram</a></li>
+                            <li><a href="https://in.linkedin.com/company/policybachat-com">Linkedin</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                
+                <hr>
+                <ul class="list-inline">
+                    
+                            <li><a href="/directory/terms-beginning-with-num">#</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-A">A</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-B">B</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-C">C</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-D">D</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-E">E</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-F">F</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-G">G</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-H">H</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-I">I</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-J">J</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-K">K</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-L">L</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-M">M</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-N">N</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-O">O</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-P">P</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-Q">Q</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-R">R</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-S">S</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-T">T</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-U">U</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-V">V</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-W">W</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-X">X</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-Y">Y</a></li>
+                        
+                            <li><a href="/directory/terms-beginning-with-Z">Z</a></li>
+                             
+                </ul>
+                <hr>
+                
+                <p>
+                    </p><p id="siteseal" class="text-center">
+                        <a href="https://www.irdai.gov.in/">
+                            <img src="images/irda-logo.png" alt="IRDAI" style="max-height: 40px; margin-right: 15px;"></a>
+                        <script async="" type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=X0XQBGpeS5JPhVgKO0ZLAwNPkyYhNnDWGtgEIfwaVi7uLS1r6nhk5mLje2q7"></script>
+                    <img style="cursor:pointer;cursor:hand" src="https://seal.godaddy.com/images/3/en/siteseal_gd_3_h_l_m.gif" onclick="verifySeal();" alt="SSL site seal - click to verify"></p>
+                    <img src="images/payment.png" class="img-responsive center-block" alt="Payment Types" style="margin-bottom: 16px; height: 24px;">
+                <p></p>
+                <p class="text-center">
+                    <a href="/privacy-and-security">Privacy &amp; Security</a>
+                    | <a href="/terms-and-conditions">Terms &amp; Conditions</a>
+                    | <a href="/shipping-and-delivering">Shipping &amp; Delivery Policy</a>
+                    | <a href="/cancellation-and-refund-policy">Cancellation &amp; Refund</a>
+                    | <a href="/disclaimer">Disclaimer</a>
+                </p>
+                <p class="text-center" style="font-size: 13px;">
+                    Website Approved by IRDA(Govt of India) Reg No. IRDAI/WBA30/2016 Valid till:
+                26-04-2022<br>
+                    *Insurance is the subject matter of solicitation. Visitors are hereby informed that their information submitted on the website may be shared with insurers. The product information for comparison displayed on this website is of the insurers with whom our company has an agreement.Product information is authentic and solely based on the information received from the Insurer.<br>
+                    *The information provided on this website/page is for information purpose only. Policybachat does not in any form or manner endorse the information so provided on the website and strives to provide factual and unbiased information to customers to assist in making informed insurance choices.
+                    <br>
+                    © 2021 Deztination Insurance Web Aggregators Pvt. Ltd. All rights reserved.<br>
+                    PolicyBachat and PolicyBachat Logo are registered trademarks of Deztination Insurance Web Aggregators Pvt. Ltd.
+                </p>
+            </div>
+
+        </footer>
+        <!-- end of footer -->
+
+<script src="policy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+</html>
